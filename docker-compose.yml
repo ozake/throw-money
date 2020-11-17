@@ -1,0 +1,18 @@
+version: "3"
+services:
+  throwmoney_database:
+    container_name: throwmoney_database
+    image: mysql:5.7
+    environment:
+      MYSQL_DATABASE: kakao_db
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_HOST: '%'
+    ports:
+      - 3306:3306
+
+  test_application:
+    build: .
+    ports:
+      - 8080:8080
+    depends_on:
+      - throwmoney_database
