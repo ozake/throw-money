@@ -1,4 +1,4 @@
-version: "3"
+version: "3.7"
 services:
   throwmoney_database:
     container_name: throwmoney_database
@@ -7,12 +7,24 @@ services:
       MYSQL_DATABASE: kakao_db
       MYSQL_ROOT_PASSWORD: root
       MYSQL_ROOT_HOST: '%'
+    volumes:
+    - "./init/:/docker-entrypoint-initdb.d/"
     ports:
       - 3306:3306
 
-  test_application:
+  redis:
+    container_name: throwmoney_redis
+    image: bitnami/redis:latest
+    ports:
+      - 11211:11211
+    environment:
+      - REDIS_PASSWORD=password123
+
+  throw-money:
+    container_name: throw-money-application
     build: .
     ports:
       - 8080:8080
     depends_on:
       - throwmoney_database
+      - redis
