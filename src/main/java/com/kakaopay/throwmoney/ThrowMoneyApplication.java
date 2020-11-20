@@ -1,8 +1,6 @@
 package com.kakaopay.throwmoney;
 
-import com.kakaopay.throwmoney.config.SwaggerUiWebMvcConfigurer;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
