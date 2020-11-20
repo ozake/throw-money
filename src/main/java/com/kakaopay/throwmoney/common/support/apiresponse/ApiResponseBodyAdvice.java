@@ -190,21 +190,14 @@ public class ApiResponseBodyAdvice implements ResponseBodyAdvice {
             message = ex.getMessage();
         }
 
-//		res.setContentType("text/plain;charset=UTF-8");
-//		res.setHeader("Server", _HostName());
-
         String errorURL = req.getRequestURL().toString();
         UUID randomUUID = UUID.randomUUID();
         String uuid = randomUUID.toString();
         res.addHeader("X-Trace-Id", uuid);
         res.addHeader("X-Error-Url", errorURL);
-//		res.addHeader("X-Error-Message", URLEncoder.encode(message, "UTF-8"));
-//		res.addIntHeader("X-Error-Code", code);
-        //res.addHeader("Exception", ex.getClass().getName());
 
         String hostName = _HostName();
 
-        // log.error("{} {}", uuid, hostName, hostName, hostName);
         //FIXME LOG
         log.error(API_ERROR_MARKER, "[{}], {}, {}", uuid, hostName, errorURL, ex);
 
