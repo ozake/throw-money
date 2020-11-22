@@ -14,14 +14,15 @@ CREATE TABLE IF NOT EXISTS `throwMoney` (
   `updatedAt` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `uniq_token` (`token`),
-  KEY `throw_roomId_token_idx` (`roomId`,`token`)
+  KEY `throwMoney_roomId_token_idx` (`roomId`,`token`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE IF NOT EXISTS `pickUp` (
   `id` bigint(11) unsigned NOT NULL AUTO_INCREMENT,
   `throwMoneyId` bigint(11) unsigned NOT NULL COMMENT 'throwMoney테이블 FK',
-  `userId` bigint(11) unsigned NOT NULL COMMENT '받기한 회원번호',
-  `amount` int(11) NOT NULL DEFAULT '0' COMMENT '받은 금액',
+  `userId` bigint(11) unsigned DEFAULT NULL COMMENT '받기한 회원번호',
+  `amount` bigint(11) NOT NULL DEFAULT '0' COMMENT '받을 금액',
+  `isReceived` char(1) NOT NULL DEFAULT 'N' COMMENT '받음여부(Y:받음, N:받지않음)',
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),

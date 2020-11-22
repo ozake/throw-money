@@ -8,7 +8,7 @@ server:
 
 spring:
   profiles:
-    active: local
+    active: test
   jpa:
     show-sql: true
     hibernate:
@@ -16,7 +16,7 @@ spring:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     database: mysql
   datasource:
-    url: jdbc:mysql://throwmoney_database:3306/kakao_db?useSSL=false
+    url: jdbc:mysql://localhost:3306/kakao_db?useSSL=false
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -28,10 +28,9 @@ spring:
         max-active: 10
         max-idle: 10
         min-idle: 1
-    host: throwmoney_redis
+    host: localhost
   jwt:
     secret: 9AA89
-
 
 
 

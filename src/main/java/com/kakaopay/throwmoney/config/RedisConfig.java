@@ -2,14 +2,17 @@ package com.kakaopay.throwmoney.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.FilterType;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
 
 @Configuration
-@EnableRedisRepositories
+@EnableRedisRepositories(includeFilters = @ComponentScan.Filter(type = FilterType.ASPECTJ, pattern = {"com.kakaopay.throwmoney.model.redis.token.*"}))
 public class RedisConfig {
 
     @Value("${spring.redis.host}")
@@ -18,9 +21,16 @@ public class RedisConfig {
     @Value("${spring.redis.port}")
     private int redisPort;
 
+    @Value("${spring.redis.password}")
+    private String redisPassword;
+
     @Bean
     public RedisConnectionFactory redisConnectionFactory() {
-        return new LettuceConnectionFactory(redisHost, redisPort);
+        RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
+        redisStandaloneConfiguration.setHostName(redisHost);
+        redisStandaloneConfiguration.setPort(redisPort);
+        redisStandaloneConfiguration.setPassword(redisPassword);
+        return new LettuceConnectionFactory(redisStandaloneConfiguration);
     }
 
     @Bean

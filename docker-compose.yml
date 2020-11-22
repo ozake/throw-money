@@ -16,7 +16,7 @@ services:
     container_name: throwmoney_redis
     image: bitnami/redis:latest
     ports:
-      - 11211:11211
+      - 6379:6379
     environment:
       - REDIS_PASSWORD=password123
 
