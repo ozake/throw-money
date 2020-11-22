@@ -32,18 +32,21 @@ public class JwtTokenProvider { // JWT 토큰을 생성 및 검증 모듈
     @Autowired
     private final ObjectMapper mapper;
 
+    @Autowired
+    private Identify identify;
+
     @PostConstruct
     protected void init() {
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
     }
 
     // 받기 Jwt 토큰 생성
-    public String createTokenForPickUp(String keyToken, Identify identify, Long throwId) {
+    public String createTokenForPickUp(String keyToken, Long throwId) {
         return createJWT(keyToken, identify.getUserId(), identify.getRoomId(), tokenPickUPValidMilisecond, throwId, TokenType.PICK_UP);
     }
 
     // 조회용 jwt 토큰 생성
-    public String createTokenForThrowRead(String keyToken, Identify identify, Long throwId) {
+    public String createTokenForThrowRead(String keyToken, Long throwId) {
         return createJWT(keyToken, identify.getUserId(), identify.getRoomId(), tokenReadVaildMilisecond, throwId, TokenType.THROW_READ);
     }
 

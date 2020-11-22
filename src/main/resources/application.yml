@@ -13,10 +13,12 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     database: mysql
   datasource:
-    url: jdbc:mysql://throwmoney_database:3306/kakao_db?useSSL=false
+    url: jdbc:mysql://throwmoney_database:3306/kakao_db?useSSL=false&autoReconnect=true
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver

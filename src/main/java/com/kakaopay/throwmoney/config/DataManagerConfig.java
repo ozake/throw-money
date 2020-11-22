@@ -4,6 +4,10 @@ import com.kakaopay.throwmoney.model.redis.token.repository.PickUpTokenRepositor
 import com.kakaopay.throwmoney.model.redis.token.repository.ThrowReadTokenRepository;
 import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.boot.autoconfigure.orm.jpa.HibernateProperties;
+import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.*;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -17,17 +21,18 @@ import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
 @Configuration
-@EnableTransactionManagement
-@EnableJpaRepositories(excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = {PickUpTokenRepository.class, ThrowReadTokenRepository.class}))
+@EnableJpaRepositories(basePackages = {"com.kakaopay.throwmoney.model.jpa.repository"}, excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = {PickUpTokenRepository.class, ThrowReadTokenRepository.class}))
+@EnableConfigurationProperties({JpaProperties.class, HibernateProperties.class})
+@EntityScan(basePackages = {"com.kakaopay.throwmoney.model.jpa.entity"})
 public class DataManagerConfig {
-    @Bean
+    /*@Bean
     @Primary
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(@Qualifier("dataSource") DataSource dataSource) {
         LocalContainerEntityManagerFactoryBean entityManagerFactory = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactory.setDataSource(dataSource);
         entityManagerFactory.setPersistenceProvider(new HibernatePersistenceProvider());
         entityManagerFactory.setPersistenceUnitName("entityManagerUnit");
-        entityManagerFactory.setPackagesToScan("com.kakaopay.throwmoney");
+        entityManagerFactory.setPackagesToScan("com.kakaopay.throwmoney.*");
         HibernateJpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
         jpaVendorAdapter.setShowSql(true);
         jpaVendorAdapter.setGenerateDdl(false);
@@ -48,5 +53,5 @@ public class DataManagerConfig {
     @Bean
     public PersistenceExceptionTranslationPostProcessor exceptionTranslationPostProcessor() {
         return new PersistenceExceptionTranslationPostProcessor();
-    }
+    }*/
 }

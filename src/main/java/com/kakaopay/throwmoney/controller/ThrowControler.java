@@ -18,15 +18,16 @@ import javax.validation.Valid;
 @RestController
 @Api(value = "뿌리기 컨트롤러")
 @Slf4j
+@RequestMapping(value = "/v1/throw", consumes = "application/json")
 public class ThrowControler {
 
     @Autowired
     private ThrowMoneyApiService throwMoneyApiService;
 
-    @PostMapping(value = "/v1/throw", consumes = "application/json")
+    @PostMapping
     @ApiOperation(value = "뿌리기 요청")
     public ThrowResponse throwMoney(@RequestBody @Valid ThrowRequest throwRequest) {
 
-        return ThrowResponse.builder().token(throwMoneyApiService.generateToken()).build();
+        return throwMoneyApiService.throwMoney(throwRequest);
     }
 }
