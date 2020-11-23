@@ -1,5 +1,6 @@
 # 카카오페이 머니 뿌리기 
-kakaopay
+
+### GITHUB URL : https://github.com/ozake/throw-money
 
 프로젝트 구성
 -------------
@@ -32,7 +33,7 @@ kakaopay
 > - jwt의 유효기간을 체크하여 10분 여부를 체크하며, 유효할 경우 뿌리기 테이블의 키값을 꺼내어 테이블에서 조회한다.
 > - 해당 jwt의 userId를 이용하여 뿌리기 본인이 받기하는경우 실패를 반환한다.
 > - 동시성 문제를 위해 트랜잭션의 isolation level을 REPEATABLE_READ를 적용
-> - 중복 받기는 application에서 filter을 통해 1차로 검증하고, database에서 뿌리기 테이블 키값과 userId값을 uniqueKey로 처리
+> - 중복 받기는 application에서 filter을 통해 검증
 - 조회
 > - 조회용 jwt를 통해 7일의 만료시간으로 기간을 체크한다.
 > - 조회용 jwt를 얻기위한 키값으로 토큰값 + userId + roomId를 사용하여 뿌리기한 본인이 아닐경우 체크한다.
