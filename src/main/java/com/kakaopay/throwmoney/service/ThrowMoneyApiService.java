@@ -81,7 +81,7 @@ public class ThrowMoneyApiService {
                 .build();
     }
 
-    private List<PickupEntity> initPickup(ThrowRequest throwRequest, Long throwMoneyId) {
+    public List<PickupEntity> initPickup(ThrowRequest throwRequest, Long throwMoneyId) {
         Stream<Integer> initStream =
                 Stream.iterate(throwRequest.getMemberCnt(), memberCnt -> memberCnt - 1).limit(throwRequest.getMemberCnt());
         AtomicReference<Long> amount = new AtomicReference<>(throwRequest.getAmount());
