@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Base64;
 import java.util.Date;
 import java.util.stream.Stream;
@@ -81,6 +83,17 @@ public class JwtTokenProvider { // JWT 토큰을 생성 및 검증 모듈
         }
     }
 
+    public Long getUserId(String jwtToken) {
+        try {
+            Jws<Claims> claims = parseClaimsJws(jwtToken);
+            return claims.getBody().get("userId", Long.class);
+        } catch (ExpiredJwtException e) {
+            throw new ApiException("기간 만료된 토큰입니다.", HttpStatus.BAD_REQUEST, 400);
+        } catch (Exception e) {
+            throw new ApiException("토큰 조회 실패하였습니다.", HttpStatus.INTERNAL_SERVER_ERROR, 500);
+        }
+    }
+
 
     // Jwt 만료일자 확인
     public boolean validateToken(String jwtToken) {
@@ -96,6 +109,21 @@ public class JwtTokenProvider { // JWT 토큰을 생성 및 검증 모듈
             flag = false;
         }
         return flag;
+    }
+
+    public LocalDateTime getIssuedAt(String jwtToken) {
+        try {
+            Jws<Claims> claims = parseClaimsJws(jwtToken);
+            Date issuedAt = claims.getBody().getIssuedAt();
+
+            return issuedAt.toInstant()
+                    .atZone(ZoneId.of("Asia/Seoul"))
+                    .toLocalDateTime();
+        } catch (ExpiredJwtException e) {
+            throw new ApiException("기간 만료된 토큰입니다.", HttpStatus.BAD_REQUEST, 400);
+        } catch (Exception e) {
+            throw new ApiException("토큰 조회 실패하였습니다.", HttpStatus.INTERNAL_SERVER_ERROR, 500);
+        }
     }
 
     public Jws<Claims> parseClaimsJws(String jwtToken) throws ExpiredJwtException {

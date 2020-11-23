@@ -53,10 +53,9 @@ public class ThrowMoneyEntity extends BaseEntity {
         this.setUpdatedAt(LocalDateTime.now());
     }
 
-    /*@JoinColumn(name = "`throwMoneyId`", referencedColumnName = "`id")
+    @JoinColumn(name = "`throwMoneyId`", referencedColumnName = "`id`")
     @OneToMany(targetEntity = PickupEntity.class, fetch = FetchType.LAZY)
     @BatchSize(size = 100)
     @JsonManagedReference
     private List<PickupEntity> pickupEntityList;
-*/
 }

@@ -1,6 +1,9 @@
 SET NAMES utf8;
 SET character_set_client = utf8mb4;
 
+SET GLOBAL time_zone='Asia/Seoul';
+SET time_zone='Asia/Seoul';
+
 CREATE DATABASE IF NOT EXISTS kakao_db;
 
 CREATE TABLE IF NOT EXISTS `throw_money` (

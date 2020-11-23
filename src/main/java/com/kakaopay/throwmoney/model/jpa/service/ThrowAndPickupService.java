@@ -33,6 +33,10 @@ public class ThrowAndPickupService {
         return pickupRepository.save(MapperSupport.map(pickUpDto, PickupEntity.class));
     }
 
+    public PickupEntity savePickup(PickupEntity pickupEntity) {
+        return pickupRepository.save(pickupEntity);
+    }
+
     public List<PickupEntity> saveAllPickup(List<PickUpDto> pickUpDtoList) {
         return pickupRepository.saveAll(MapperSupport.mapAll(pickUpDtoList, PickupEntity.class));
     }
@@ -43,5 +47,9 @@ public class ThrowAndPickupService {
 
     public Optional<PickupEntity> findFirstByPickUpOrderbyAmountDesc(Long throwMoneyId, YesNoType isReceived) {
         return pickupRepository.findFirstByThrowMoneyIdAndIsReceivedOrderByAmountDesc(throwMoneyId, isReceived);
+    }
+
+    public Optional<ThrowMoneyEntity> findById(Long id) {
+        return throwMoneyRepository.findById(id);
     }
 }
