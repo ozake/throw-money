@@ -22,6 +22,7 @@ import com.kakaopay.throwmoney.util.token.jwt.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
@@ -50,7 +51,7 @@ public class ThrowMoneyApiService {
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
 
-    @Transactional
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
     public ThrowResponse throwMoney(ThrowRequest throwRequest) {
         String token = randomGenerator.generateSecureRandomToken();
         String key = token + identify.getRoomId().toString();
@@ -96,10 +97,7 @@ public class ThrowMoneyApiService {
         return throwAndPickupService.saveAllPickup(pickUpDtoList);
     }
 
-    public String generateToken() {
-        return randomGenerator.generateSecureRandomToken();
-    }
-
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
     public PickUpResponse pickUpMoney(TokenRequest tokenRequest) {
         PickUpResponse pickUpResponse;
         String key = tokenRequest.getToken() + identify.getRoomId().toString();

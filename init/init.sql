@@ -28,6 +28,7 @@ CREATE TABLE IF NOT EXISTS `pick_up` (
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `pickUp_throwMoneyId_userId_uniq` (`userId`,`throwMoneyId`),
   KEY `throwMoneyFK` (`throwMoneyId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 

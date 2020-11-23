@@ -46,6 +46,6 @@ public class RandomGenerator {
     public long throwMoneyDivider(long amount, long memberCnt) {
         long min = 1;
         long max = amount - memberCnt + 1;
-        return (min == max) ? min : secureRandom.longs(1, min, max).sum();
+        return (min == max) ? min : (memberCnt == 1) ? max : secureRandom.longs(1, min, max).sum();
     }
 }
